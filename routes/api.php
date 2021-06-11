@@ -25,6 +25,9 @@ Route::group([ 'middleware' => 'auth:api' ], function ()
     Route::get('access_check', [ AuthController::class, 'index' ]);
 
 
+    Route::get('/todos', [ AuthController::class, 'show' ]);
+
+
 
 
 
