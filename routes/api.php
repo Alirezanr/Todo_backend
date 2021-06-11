@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +23,14 @@ Route::prefix('auth')->group(function ()
 Route::group([ 'middleware' => 'auth:api' ], function ()
 {
     Route::get('access_check', [ AuthController::class, 'index' ]);
+
+
+
+
+
     Route::post('logout', [ AuthController::class, 'logout' ]);
+
+
 });
+
+
