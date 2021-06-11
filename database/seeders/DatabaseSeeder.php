@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UserTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(TodoTableSeeder::class);
         $this->call(OauthAccessTokensTableSeeder::class);
         $this->call(OauthAuthCodesTableSeeder::class);
