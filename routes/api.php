@@ -18,9 +18,8 @@ Route::group([ 'middleware' => 'auth:api' ], function ()
 
     Route::get('/todos', [ TodoController::class, 'show' ]);
     Route::post('/create-todo', [ TodoController::class, 'create' ]);
-
-
-
+    Route::delete('/delete-todo/{id}', [ TodoController::class, 'destroy' ]);
+    Route::put('/update/{id}', [ TodoController::class, 'update' ]);
 
 
     Route::post('logout', [ AuthController::class, 'logout' ]);
