@@ -64,10 +64,4 @@ class AuthController extends Controller
     {
         return response()->json([ "user" => Auth::user() ], 202);
     }
-
-    public function show()
-    {
-        $todos = DB::table('todos')->paginate(5);
-        return response()->json([ "todos" => $todos ], 202);
-    }
 }
