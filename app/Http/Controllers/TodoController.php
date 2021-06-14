@@ -76,9 +76,9 @@ class TodoController extends Controller
      */
     public function update($id)
     {
-        if ($id != null)
+        $todo = Todo::firstWhere('id', $id);
+        if ($todo != null)
         {
-            $todo = Todo::firstWhere('id', $id);
             $todo->title = request('title');
             $todo->user_id = Auth::id();
             $todo->description = request('description');
@@ -94,8 +94,9 @@ class TodoController extends Controller
             }
         } else
         {
-            return response()->json([ "message" => 'Error while updating todo.' ], 406);
+            return response()->json([ "message" => 'Could not find todo' ], 406);
         }
+
     }
 
     /**
@@ -106,15 +107,19 @@ class TodoController extends Controller
     public function statusUpdate($id)
     {
         $todo = Todo::firstWhere('id', $id);
-        $todo->is_done = request('is_done');
-        if ($todo->save())
+        if ($todo != null)
         {
-            return response()->json([ "message" => 'To-dos status updated.' ], 200);
+            $todo->is_done = request('is_done');
+            if ($todo->save())
+            {
+                return response()->json([ "message" => 'To-dos status updated.' ], 200);
+            } else
+            {
+                return response()->json([ "message" => 'Error while updating todo.' ], 406);
+            }
         } else
         {
-            return response()->json([ "message" => 'Error while updating todo.' ], 406);
+            return response()->json([ "message" => 'Could not find todo' ], 406);
         }
     }
-
-
 }
