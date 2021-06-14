@@ -19,6 +19,7 @@ class CreateTodosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
+            $table->boolean('is_done')->default(false);
             $table->enum('priority',['low','medium','high'])->default('medium');
             $table->text('image_url')->nullable();
             $table->string('location_lang')->nullable();
@@ -29,6 +30,7 @@ class CreateTodosTable extends Migration
 
     /**
      * Reverse the migrations.
+     * 09374854229
      *
      * @return void
      */
