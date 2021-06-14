@@ -74,24 +74,42 @@ class TodoController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         if ($id != null)
         {
             $todo = Todo::firstWhere('id', $id);
-            $todo->title = $request->title;
+            $todo->title = request('title');
             $todo->user_id = Auth::id();
-            $todo->description = $request->description;
-            $todo->priority = ( $request->priority ) ? $request->priority : 'medium';
-            $todo->image_url = $request->image_url;
-            $todo->is_done = $request->is_done;
-            $todo->location_lang = $request->location_lang;
-            $todo->location_lat = $request->location_lat;
+            $todo->description = request('description');
+            $todo->priority = ( request('priority') ) ? request('priority') : 'medium';
+            $todo->image_url = request('image_url');
+            $todo->is_done = request('is_done');
+            $todo->location_lang = request('location_lang');
+            $todo->location_lat = request('location_lat');
 
             if ($todo->save())
             {
                 return response()->json([ "message" => 'To-do updated successfully.' ], 200);
             }
+        } else
+        {
+            return response()->json([ "message" => 'Error while updating todo.' ], 406);
+        }
+    }
+
+    /**
+     * make a to-do done.
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function statusUpdate($id)
+    {
+        $todo = Todo::firstWhere('id', $id);
+        $todo->is_done = request('is_done');
+        if ($todo->save())
+        {
+            return response()->json([ "message" => 'To-dos status updated.' ], 200);
         } else
         {
             return response()->json([ "message" => 'Error while updating todo.' ], 406);
