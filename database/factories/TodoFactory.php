@@ -22,12 +22,13 @@ class TodoFactory extends Factory
     public function definition()
     {
         return [
-            'user_id'           => $this->faker->numberBetween(1, 3),
-            'title'             => $this->faker->sentence(3),
-            'description'       => $this->faker->sentence(22),
-            'priority'          => "medium",
-            'location_lang'     => $this->faker->numberBetween(260, 500),
-            'location_lat'      => $this->faker->numberBetween(260, 500)
+            'user_id'       => $this->faker->numberBetween(1, 3),
+            'category'      => "Personal",
+            'title'         => $this->faker->sentence(3),
+            'description'   => $this->faker->sentence(22),
+            'priority'      => "medium",
+            'location_lang' => $this->faker->numberBetween(260, 500),
+            'location_lat'  => $this->faker->numberBetween(260, 500)
         ];
     }
 }
