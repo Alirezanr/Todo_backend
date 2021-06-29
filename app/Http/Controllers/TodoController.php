@@ -24,6 +24,20 @@ class TodoController extends Controller
             return response()->json([ "message" => "There is no todo",
                                       "todos"   => $todos ], 412);
         }
+    }
+
+    public function getSingleTodo()
+    {
+        $todos = Todo::firstWhere('id', 10);
+        if ($todos != null)
+        {
+            return response()->json([ "message" => "Todos list.",
+                                      "todos"   => $todos ], 200);
+        } else
+        {
+            return response()->json([ "message" => "There is no todo",
+                                      "todos"   => $todos ], 412);
+        }
 
     }
 
@@ -34,7 +48,6 @@ class TodoController extends Controller
     public function create(Request $request)
     {
         $request->validate([ 'title' => 'required' ]);
-
         $todo = Todo::create([ "title"         => $request->title,
                                "user_id"       => Auth::id(),
                                "description"   => $request->description,
@@ -42,7 +55,7 @@ class TodoController extends Controller
                                "image_url"     => $request->image_url,
                                "location_lang" => $request->location_lang,
                                "location_lat"  => $request->location_lat ]);
-
+        $todo->category = $request->category;
         $todo->save();
 
         return response()->json([ "message" => 'To-do created successfully',
@@ -82,6 +95,7 @@ class TodoController extends Controller
             $todo->title = request('title');
             $todo->user_id = Auth::id();
             $todo->description = request('description');
+            $todo->category = request('category');
             $todo->priority = ( request('priority') ) ? request('priority') : 'medium';
             $todo->image_url = request('image_url');
             $todo->is_done = request('is_done');
@@ -90,7 +104,8 @@ class TodoController extends Controller
 
             if ($todo->save())
             {
-                return response()->json([ "message" => 'To-do updated successfully.' ], 200);
+                return response()->json([ "message" => 'To-do updated successfully.',
+                                          "todo"    => $todo ], 200);
             }
         } else
         {
@@ -104,7 +119,7 @@ class TodoController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function statusUpdate($id)
+    public function updateStatus($id)
     {
         $todo = Todo::firstWhere('id', $id);
         if ($todo != null)
@@ -121,5 +136,18 @@ class TodoController extends Controller
         {
             return response()->json([ "message" => 'Could not find todo' ], 406);
         }
+    }
+
+    /**
+     * Returns list of todos selected by a category
+     * @param $category
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getTodosByCategory($category)
+    {
+        $todos = Todo::where('category', $category)->get();
+        return response()->json([ "message" => 'To-do created successfully',
+                                  'count'   => $todos->count(),
+                                  "todo"    => $todos ], 200);
     }
 }
