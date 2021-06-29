@@ -16,10 +16,12 @@ Route::group([ 'middleware' => 'auth:api' ], function ()
     Route::get('user-info', [ AuthController::class, 'index' ]);
 
     Route::get('/todos', [ TodoController::class, 'show' ]);
-    Route::post('/create-todo', [ TodoController::class, 'create' ]);
-    Route::delete('/delete-todo/{id}', [ TodoController::class, 'destroy' ]);
+    Route::get('/todo/{id}', [ TodoController::class, 'getSingleTodo' ]);
+    Route::post('/create', [ TodoController::class, 'create' ]);
+    Route::delete('/delete/{id}', [ TodoController::class, 'destroy' ]);
     Route::put('/update/{id}', [ TodoController::class, 'update' ]);
-    Route::put('/todo-status/{id}', [ TodoController::class, 'statusUpdate' ]);
+    Route::post('/status-update/{id}', [ TodoController::class, 'updateStatus' ]);
+    Route::post('/by-category/{category}', [ TodoController::class, 'getTodosByCategory' ]);
 
     Route::post('logout', [ AuthController::class, 'logout' ]);
 });
