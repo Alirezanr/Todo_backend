@@ -60,6 +60,18 @@ class AuthController extends Controller
         return response()->json([ "message" => "User logged out successfully" ], 200);
     }
 
+    public function emailCheck(Request $request)
+    {
+        if (User::firstWhere('email', $request->email))
+        {
+            return response()->json([ "message" => "This email is already taken." ], 409);
+        } else
+        {
+            return response()->json([ "message" => "You can choose this email." ], 200);
+        }
+
+    }
+
     public function index()
     {
         return response()->json([ "user" => Auth::user() ], 202);
