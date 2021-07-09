@@ -23,4 +23,9 @@ class Todo extends Model
         "location_lang",
         "location_lat"
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
