@@ -14,7 +14,7 @@ class TodoController extends Controller
      */
     public function show()
     {
-        $todos = Todo::paginate(10);
+        $todos = \auth()->user()->todos;
         if ($todos != null)
         {
             return response()->json([ "message" => "Todos list.",
