@@ -27,6 +27,7 @@ class TodoFactory extends Factory
             'title'         => $this->faker->sentence(3),
             'description'   => $this->faker->sentence(22),
             'priority'      => "medium",
+            'is_done'       => $this->faker->numberBetween(0, 1),
             'location_lang' => $this->faker->numberBetween(260, 500),
             'location_lat'  => $this->faker->numberBetween(260, 500)
         ];
