@@ -23,6 +23,7 @@ Route::group([ 'middleware' => 'auth:api' ], function ()
     Route::put('/update/{id}', [ TodoController::class, 'update' ]);
     Route::post('/status-update/{id}', [ TodoController::class, 'updateStatus' ]);
     Route::post('/by-category/{category}', [ TodoController::class, 'getTodosByCategory' ]);
+    Route::post('/search/{query}',[TodoController::class,'search']);
 
     Route::post('logout', [ AuthController::class, 'logout' ]);
 });
